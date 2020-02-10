@@ -1,0 +1,9 @@
+name: 'Onesignal'
+type: module
+description: 'Integrates OneSignal, a push notification service.'
+core: 8.x
+package: 'OneSignal'
+dependencies:
+  - drupal:system (>=8.5)
+  - token:token
+configure: onesignal.one_signal_config_form

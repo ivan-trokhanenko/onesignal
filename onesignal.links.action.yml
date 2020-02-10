@@ -1,0 +1,5 @@
+entity.onesignal_pattern.add_form:
+  route_name: 'entity.onesignal_pattern.add_form'
+  title: 'Add OneSignal notification pattern'
+  appears_on:
+    - entity.onesignal_pattern.collection

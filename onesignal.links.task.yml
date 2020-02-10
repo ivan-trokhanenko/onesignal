@@ -1,0 +1,17 @@
+entity.onesignal_pattern.collection:
+  route_name: entity.onesignal_pattern.collection
+  base_route: onesignal.one_signal_config_form
+  title: 'Patterns'
+  weight: 10
+
+onesignal.one_signal_config_form:
+  route_name: onesignal.one_signal_config_form
+  base_route: onesignal.one_signal_config_form
+  title: 'API Configurations'
+  weight: 15
+
+onesignal.settings.form:
+  route_name: onesignal.settings.form
+  base_route: onesignal.one_signal_config_form
+  title: 'Settings'
+  weight: 20

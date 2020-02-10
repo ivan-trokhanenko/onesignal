@@ -1,0 +1,48 @@
+onesignal.one_signal_config_form:
+  path: '/admin/config/services/onesignal'
+  defaults:
+    _form: '\Drupal\onesignal\Form\OneSignalConfigForm'
+    _title: 'OneSignal Configurations'
+  requirements:
+    _permission: 'administer onesignal'
+  options:
+    _admin_route: TRUE
+
+onesignal.settings.form:
+  path: '/admin/config/services/onesignal/settings'
+  defaults:
+    _form: '\Drupal\onesignal\Form\OnesignalSettingsForm'
+    _title: 'Settings'
+  requirements:
+    _permission: 'administer onesignal'
+
+entity.onesignal_pattern.collection:
+  path: '/admin/config/services/onesignal/patterns'
+  defaults:
+    _entity_list: 'onesignal_pattern'
+    _title: 'Patterns'
+  requirements:
+    _permission: 'administer onesignal'
+
+entity.onesignal_pattern.add_form:
+  path: '/admin/config/services/onesignal/patterns/add'
+  defaults:
+    _entity_form: 'onesignal_pattern.default'
+    _title: 'Add OneSignal pattern'
+    tempstore_id: 'onesignal.pattern'
+  requirements:
+    _permission: 'administer onesignal'
+
+entity.onesignal_pattern.enable:
+  path: '/admin/config/services/onesignal/patterns/{onesignal_pattern}/enable'
+  defaults:
+    _entity_form: 'onesignal_pattern.enable'
+  requirements:
+    _entity_access: 'onesignal_pattern.update'
+
+entity.onesignal_pattern.disable:
+  path: '/admin/config/services/onesignal/patterns/{onesignal_pattern}/disable'
+  defaults:
+    _entity_form: 'onesignal_pattern.disable'
+  requirements:
+    _entity_access: 'onesignal_pattern.update'

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for OneSignal.
+ *
+ * @ingroup onesignal
+ */
+
+use Drupal\Core\Link;
+
+/**
+ * Implements hook_install().
+ */
+function onesignal_install() {
+  \Drupal::messenger()->addMessage(t("OneSignal settings are available under !link",
+    ['!link' => Link::createFromRoute(t('Configurations'),'onesignal.one_signal_config_form')->toString()]
+  ));
+}

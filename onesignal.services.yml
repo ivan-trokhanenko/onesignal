@@ -1,0 +1,10 @@
+services:
+  onesignal.config_manager:
+    class: Drupal\onesignal\Config\ConfigManager
+    arguments: ['@config.factory']
+  onesignal.notification_manager:
+    class: Drupal\onesignal\OnesignalNotificationManager
+    arguments: ['@http_client' , '@messenger', '@onesignal.config_manager']
+  onesignal.generator:
+    class: Drupal\onesignal\OnesignalGeneraror
+    arguments: ['@onesignal.notification_manager', '@messenger', '@token', '@token.entity_mapper', '@entity_type.manager']
