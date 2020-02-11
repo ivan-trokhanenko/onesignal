@@ -91,9 +91,3 @@ $config['onesignal.config'] = [
 API
 ---
 TODO.
-
-Bugs/Features/Patches
----------------------
-If you want to report bugs, feature requests, or submit a patch, please do
-so at the project page on the Drupal web site.
-http://drupal.org/project/onesignal
