@@ -195,6 +195,7 @@ class OneSignalConfigForm extends ConfigFormBase {
       '#default_value' => $this->configManager->getWelcomeMessage(),
       '#group' => 'onesignal_welcome',
     ];
+    // TODO Add implement ability to add onesignal script to specific pages and specific user roles.
     return parent::buildForm($form, $form_state);
   }
   
