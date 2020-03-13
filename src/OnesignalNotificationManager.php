@@ -80,6 +80,7 @@ class OnesignalNotificationManager implements OnesignalNotificationManagerInterf
       ];
       $fields = json_encode($fields);
       // Send data to onesignal.
+      // TODO. Rewrite using Drupal HTTP client.
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, self::API_LINK);
       curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -95,13 +96,11 @@ class OnesignalNotificationManager implements OnesignalNotificationManagerInterf
       curl_close($ch);
       $return["allresponses"] = $response;
       $return = json_encode($return);
-//      \Drupal::logger('bizclik_notification')->notice("JSON received: " . $return);
       $this->messenger->addMessage('Notification created');
       return $response;
     }
     catch (\Exception $e) {
       $this->messenger->addError('Notification not created');
-//      \Drupal::logger('bizclik_notification')->notice('Error! Notification to all subscribers not send ' . $e);
       exit(1);
     }
   }
