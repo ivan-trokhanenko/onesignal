@@ -168,17 +168,7 @@ function onesignal_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<p>' . t('This module defines the permission <em>Administer OneSignal settings</em>. Users should be granted this permission before they can make changes to the configurations of this module.') . '</p>';
       $output .= '<p>' . t('To configure this module, go to: <em><strong>Configuration &gt; Web services &gt; OneSignal</strong></em>') . '</p>';
       $output .= '<p>' . t('Provide the required parameters as instructed on that page.') . '</p>';
-      $output .= '<h3>' . t('API') . '</h3>';
-      $output .= '<p>' . t('The API is not yet available in the Drupal 8 version. Patches and code to help implementing the API are welcome.') . '</p>';
-      $output .= '<h3>' . t('Bugs/Features/Patches') . '</h3>';
-      $output .= '<p>' . t('If you want to report bugs, feature requests, or submit a patch, please do so at the project page on the Drupal web site.') . '</p>';
-      $output .= '<h3>' . t('Author of the Drupal 8 version') . '</h3>';
-      $output .= '<p>' . t('Juan Martinez - @url.', [
-          '@url' => Link::fromTextAndUrl('Makers365.com', Url::fromUri('https://makers365.com', []))
-            ->toString(),
-        ]) . '</p>';
-      $output .= '<p>' . t('If you use this module, find it useful, and want to send the author a thank you note, then use the Contact page at the URLs above.') . '</p>';
-      $output .= '<p>' . t('The author can also be contacted for paid customizations of this and other modules.') . '</p>';
+
       return $output;
 
     default:
@@ -204,7 +194,7 @@ function onesignal_form_node_form_alter(&$form, FormStateInterface $form_state) 
     '#title' => t('Send push notification'),
     '#default_value' => TRUE,
   ];
-  // TODO. Add custom submit ?!.
+  // TODO. Add custom submit.
 }
 
 /**
@@ -224,7 +214,7 @@ function onesignal_entity_update(EntityInterface $entity) {
 
 /**
  * Validate the pattern field, to ensure it doesn't contain any characters that
- * are invalid in URLs.
+ * are invalid.
  */
 function onesignal_pattern_validate($element, FormStateInterface $form_state) {
   
