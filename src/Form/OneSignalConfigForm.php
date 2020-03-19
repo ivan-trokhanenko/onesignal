@@ -195,7 +195,84 @@ class OneSignalConfigForm extends ConfigFormBase {
       '#default_value' => $this->configManager->getWelcomeMessage(),
       '#group' => 'onesignal_welcome',
     ];
-    // TODO Add implement ability to add onesignal script to specific pages and specific user roles.
+
+    // Visibility settings.
+    $visibility = $this->configManager->getSetting('visibility_pages');
+    $pages = $this->configManager->getSetting('pages');
+    $form['tracking']['page_display'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Pages'),
+      '#group' => 'tracking_scope',
+      '#open' => TRUE,
+    ];
+  
+    if ($visibility == 2) {
+      $form['tracking']['page_display'] = [];
+      $form['tracking']['page_display']['visibility_pages'] = [
+        '#type' => 'value',
+        '#value' => 2,
+      ];
+      $form['tracking']['page_display']['pages'] = [
+        '#type' => 'value',
+        '#value' => $pages,
+      ];
+    }
+    else {
+      $options = [
+        $this->t('Every page except the listed pages'),
+        $this->t('The listed pages only'),
+      ];
+      $description_args = [
+        '%blog' => 'blog',
+        '%blog-wildcard' => 'blog/*',
+        '%front' => '<front>',
+      ];
+      $description = $this->t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", $description_args);
+      $title = $this->t('Pages');
+    
+      $form['tracking']['page_display']['visibility_pages'] = [
+        '#type' => 'radios',
+        '#title' => $this->t('Add tracking code to specific pages'),
+        '#options' => $options,
+        '#default_value' => $visibility,
+      ];
+      $form['tracking']['page_display']['pages'] = [
+        '#type' => 'textarea',
+        '#title' => $title,
+        '#title_display' => 'invisible',
+        '#default_value' => $pages,
+        '#description' => $description,
+        '#rows' => 10,
+      ];
+    }
+  
+    // Render the role overview.
+    $visibility_roles = $this->configManager->getSetting('roles');
+    $form['tracking']['role_display'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Roles'),
+      '#group' => 'tracking_scope',
+      '#open' => TRUE,
+    ];
+  
+    $form['tracking']['role_display']['visibility_roles'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Add tracking code for specific roles'),
+      '#options' => [
+        $this->t('Add to the selected roles only'),
+        $this->t('Add to every role except the selected ones'),
+      ],
+      '#default_value' => $this->configManager->getSetting('visibility_roles'),
+    ];
+    $role_options = array_map(['\Drupal\Component\Utility\SafeMarkup', 'checkPlain'], user_role_names());
+    $form['tracking']['role_display']['roles'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Roles'),
+      '#default_value' => !empty($visibility_roles) ? $visibility_roles : [],
+      '#options' => $role_options,
+      '#description' => $this->t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
   
@@ -204,6 +281,27 @@ class OneSignalConfigForm extends ConfigFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
+
+    $values = $form_state->getValues();
+
+    // Trim some text values.
+    $form_state->setValue('pages', trim($values['pages']));
+    $form_state->setValue('roles', array_filter($values['roles']));
+
+    // Verify that every path is prefixed with a slash.
+    if ($values['visibility_pages'] != 2) {
+      $pages = preg_split('/(\r\n?|\n)/', $values['pages']);
+      foreach ($pages as $page) {
+        if (strpos($page, '/') !== 0 && $page !== '<front>') {
+          $form_state->setErrorByName(
+            'pages',
+            $this->t('Path "@page" not prefixed with slash.', ['@page' => $page])
+          );
+          // Drupal forms show one error only.
+          break;
+        }
+      }
+    }
   }
   
   /**
@@ -224,6 +322,10 @@ class OneSignalConfigForm extends ConfigFormBase {
       ->set('onesignal_auto_register', $form_state->getValue('onesignal_auto_register'))
       ->set('onesignal_notify_button', $form_state->getValue('onesignal_notify_button'))
       ->set('onesignal_localhost_secure', $form_state->getValue('onesignal_localhost_secure'))
+      ->set('visibility_pages', $form_state->getValue('visibility_pages'))
+      ->set('pages', $form_state->getValue('pages'))
+      ->set('visibility_roles', $form_state->getValue('visibility_roles'))
+      ->set('roles', $form_state->getValue('roles'))
       ->save();
   }
   

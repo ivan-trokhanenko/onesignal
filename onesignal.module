@@ -16,11 +16,15 @@ use Drupal\Core\Entity\EntityInterface;
  * Implements hook_page_attachments().
  */
 function onesignal_page_attachments(&$attachments) {
-  /** @var \Drupal\onesignal\Config\ConfigManager $config_manager */
-  $config_manager = \Drupal::service('onesignal.config_manager');
-  if (!$config_manager->getAppId()) {
+  /** @var \Drupal\onesignal\OnesignalAccessInterface $access */
+  $access = \Drupal::service('onesignal.access');
+  if (!$access->check()) {
     return;
   }
+  
+  /** @var \Drupal\onesignal\Config\ConfigManager $config_manager */
+  $config_manager = \Drupal::service('onesignal.config_manager');
+
   // Add head link to site root uploaded manifest.json file.
   $attachments['#attached']['html_head_link'][] = [
     [
@@ -118,7 +122,7 @@ function onesignal_page_attachments(&$attachments) {
     });
   });
   ';
-
+  // TODO Add cache.
   $attachments['#attached']['html_head'][] = [
     // The data.
     [
