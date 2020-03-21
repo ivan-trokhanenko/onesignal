@@ -25,7 +25,7 @@ class PatternEditForm extends EntityForm {
   /**
    * The OnesignalPattern entity.
    *
-   * @var \Drupal\onesignal\OnesignalPatternInterface
+   * @var \Drupal\onesignal\Entity\OnesignalPatternInterface
    */
   protected $entity;
 

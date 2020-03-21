@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\onesignal;
+namespace Drupal\onesignal\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
@@ -8,12 +8,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  * Provides an interface for defining OneSignal pattern entities.
  */
 interface OnesignalPatternInterface extends ConfigEntityInterface {
-
-  /**
-   * Get the tokenized pattern used during alias generation.
-   *
-   * @return string
-   */
+  
   public function getPattern();
   
   /**

@@ -29,7 +29,7 @@ interface OnesignalGeneratorInterface {
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   An entity.
    *
-   * @return \Drupal\onesignal\OnesignalPatternInterface|null
+   * @return \Drupal\onesignal\Entity\OnesignalPatternInterface|null
    */
   public function getPatternByEntity(EntityInterface $entity);
   

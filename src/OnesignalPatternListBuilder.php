@@ -37,7 +37,7 @@ class OnesignalPatternListBuilder extends DraggableListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var \Drupal\onesignal\OnesignalPatternInterface $entity */
+    /* @var \Drupal\onesignal\Entity\OnesignalPatternInterface $entity */
     $row['label'] = $entity->label();
     $row['patern']['#markup'] = $entity->getPattern();
     $row['type']['#markup'] = $entity->getAliasType()->getLabel();
