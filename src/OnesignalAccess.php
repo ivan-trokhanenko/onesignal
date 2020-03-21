@@ -118,7 +118,7 @@ class OnesignalAccess implements OnesignalAccessInterface {
    * {@inheritdoc}
    */
   public function check() {
-    if (!$this->settings->getAppId()) {
+    if (!$this->settings->getAppId() || !$this->settings->getSetting('enabled')) {
       return FALSE;
     }
 

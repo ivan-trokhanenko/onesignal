@@ -137,6 +137,7 @@ class ConfigManager implements ConfigManagerInterface {
     if (!$this->settings) {
       $settings = (array) $this->config->getOriginal();
       $settings += [
+        'enabled' => 1,
         'onesignal_app_id' => NULL,
         'onesignal_safari_web_id' => NULL,
         'onesignal_rest_api_key' => NULL,

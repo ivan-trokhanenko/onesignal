@@ -272,6 +272,12 @@ class OneSignalConfigForm extends ConfigFormBase {
       '#options' => $role_options,
       '#description' => $this->t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
     ];
+    $form['enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enabled'),
+      '#default_value' => $this->configManager->getSetting('enabled'),
+      '#description' => 'Uncheck if you want to disable OneSignal for some reason.',
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -326,6 +332,7 @@ class OneSignalConfigForm extends ConfigFormBase {
       ->set('pages', $form_state->getValue('pages'))
       ->set('visibility_roles', $form_state->getValue('visibility_roles'))
       ->set('roles', $form_state->getValue('roles'))
+      ->set('enabled', $form_state->getValue('enabled'))
       ->save();
   }
   
