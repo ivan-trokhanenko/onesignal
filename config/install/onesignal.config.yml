@@ -1,0 +1,16 @@
+onesignal_app_id: ''
+onesignal_safari_web_id: ''
+onesignal_rest_api_key: ''
+onesignal_action_message: ''
+onesignal_accept_button: Accept
+onesignal_cancel_button: Cancel
+onesignal_welcome_title: ''
+onesignal_welcome_message: ''
+onesignal_auto_register: 'true'
+onesignal_notify_button: 'true'
+onesignal_localhost_secure: 'false'
+visibility_pages: '0'
+pages: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
+visibility_roles: '0'
+roles: {  }
+enabled: 1
