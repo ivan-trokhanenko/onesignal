@@ -13,11 +13,4 @@ services:
 
   onesignal.access:
     class: Drupal\onesignal\OnesignalAccess
-    arguments:
-      - '@onesignal.config_manager'
-      - '@module_handler'
-      - '@config.factory'
-      - '@path.current'
-      - '@path_alias.manager'
-      - '@path.matcher'
-      - '@current_user'
+    arguments: ['@onesignal.config_manager', '@module_handler', '@config.factory', '@path.current', '@path_alias.manager', '@path.matcher', '@current_user']
