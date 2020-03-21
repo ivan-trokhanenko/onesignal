@@ -30,7 +30,6 @@ class OneSignalConfigForm extends ConfigFormBase {
    */
   public function __construct(ConfigFactoryInterface $configFactory, ConfigManagerInterface $configManager) {
     parent::__construct($configFactory);
-    
     $this->configManager = $configManager;
   }
   
@@ -232,7 +231,7 @@ class OneSignalConfigForm extends ConfigFormBase {
     
       $form['tracking']['page_display']['visibility_pages'] = [
         '#type' => 'radios',
-        '#title' => $this->t('Add tracking code to specific pages'),
+        '#title' => $this->t('Add OneSignal script to specific pages'),
         '#options' => $options,
         '#default_value' => $visibility,
       ];
@@ -257,7 +256,7 @@ class OneSignalConfigForm extends ConfigFormBase {
   
     $form['tracking']['role_display']['visibility_roles'] = [
       '#type' => 'radios',
-      '#title' => $this->t('Add tracking code for specific roles'),
+      '#title' => $this->t('Add OneSignal script for specific roles'),
       '#options' => [
         $this->t('Add to the selected roles only'),
         $this->t('Add to every role except the selected ones'),
@@ -270,13 +269,13 @@ class OneSignalConfigForm extends ConfigFormBase {
       '#title' => $this->t('Roles'),
       '#default_value' => !empty($visibility_roles) ? $visibility_roles : [],
       '#options' => $role_options,
-      '#description' => $this->t('If none of the roles are selected, all users will be tracked. If a user has any of the roles checked, that user will be tracked (or excluded, depending on the setting above).'),
+      '#description' => $this->t('If none of the roles are selected, all users will see the OneSignal subscription popup. If a user has any of the roles checked, that user will see the popup (or excluded, depending on the setting above).'),
     ];
     $form['enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled'),
       '#default_value' => $this->configManager->getSetting('enabled'),
-      '#description' => 'Uncheck if you want to disable OneSignal for some reason.',
+      '#description' => 'Uncheck if you want to disable OneSignal throughout the whole site for some reason.',
     ];
 
     return parent::buildForm($form, $form_state);
