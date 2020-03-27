@@ -85,7 +85,6 @@ class PatternEditForm extends EntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     $options = [];
     foreach ($this->manager->getVisibleDefinitions() as $plugin_id => $plugin_definition) {
       $options[$plugin_id] = $plugin_definition['label'];
@@ -112,7 +111,7 @@ class PatternEditForm extends EntityForm {
       '#suffix' => '</div>',
     ];
 
-    // if there is no type yet, stop here.
+    // If there is no type yet, stop here.
     if ($this->entity->getType()) {
 
       $alias_type = $this->entity->getAliasType();
@@ -133,6 +132,7 @@ class PatternEditForm extends EntityForm {
         '#type' => 'textfield',
         '#title' => $this->t('Title'),
         '#default_value' => $this->entity->getTitle(),
+        '#description' => $this->t('The notification\'s title.'),
         '#size' => 65,
         '#maxlength' => 1280,
         '#element_validate' => ['token_element_validate', 'onesignal_pattern_validate'],
@@ -145,50 +145,51 @@ class PatternEditForm extends EntityForm {
         '#type' => 'textfield',
         '#title' => $this->t('Summary'),
         '#default_value' => $this->entity->getSummary(),
+        '#description' => $this->t('The notification\'s content (excluding the title).'),
         '#size' => 65,
         '#maxlength' => 1280,
         '#element_validate' => ['token_element_validate', 'onesignal_pattern_validate'],
         '#after_build' => ['token_element_validate'],
         '#token_types' => $alias_type->getTokenTypes(),
         '#min_tokens' => 1,
-//        '#required' => TRUE,
       ];
       $form['pattern_container']['url'] = [
         '#type' => 'textfield',
         '#title' => $this->t('Url'),
-        '#default_value' => $this->entity->getUrl(),
+        '#default_value' => $this->entity->getUrl(),//
+        '#description' => $this->t('The URL to open in the browser when a user clicks on the notification. Example: @example It may be an [node:url:absolute]', ['@example' => 'http://www.google.com']),
         '#size' => 65,
         '#maxlength' => 1280,
         '#element_validate' => ['token_element_validate', 'onesignal_pattern_validate'],
         '#after_build' => ['token_element_validate'],
         '#token_types' => $alias_type->getTokenTypes(),
-        '#min_tokens' => 1, // todo.
+        '#min_tokens' => 1,
         '#required' => TRUE,
       ];
       $form['pattern_container']['picture'] = [
         '#type' => 'textfield',
         '#title' => $this->t('Picture'),
         '#default_value' => $this->entity->getPicture(),
-        '#size' => 65,
-        '#maxlength' => 1280,
-        '#element_validate' => ['token_element_validate', 'onesignal_pattern_validate'],
-        '#after_build' => ['token_element_validate'],
-        '#token_types' => $alias_type->getTokenTypes(),
-        '#min_tokens' => 1, // todo.
-//        '#required' => TRUE,
-      ];
-      $form['pattern_container']['icon'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Icon'),
-        '#default_value' => $this->entity->getIcon(),
+        '#description' => $this->t('Picture to display in the expanded view. Example: @example', ['@example' => 'https://domain.com/image.jpg']),
         '#size' => 65,
         '#maxlength' => 1280,
         '#element_validate' => ['token_element_validate', 'onesignal_pattern_validate'],
         '#after_build' => ['token_element_validate'],
         '#token_types' => $alias_type->getTokenTypes(),
         '#min_tokens' => 1,
-//        '#required' => TRUE,
       ];
+      // Uncoment once https://www.drupal.org/project/drupal/issues/2842780 resolved.
+//      $form['pattern_container']['icon'] = [
+//        '#type' => 'textfield',
+//        '#title' => $this->t('Icon'),
+//        '#default_value' => $this->entity->getIcon(),
+//        '#size' => 65,
+//        '#maxlength' => 1280,
+//        '#element_validate' => ['token_element_validate', 'onesignal_pattern_validate'],
+//        '#after_build' => ['token_element_validate'],
+//        '#token_types' => $alias_type->getTokenTypes(),
+//        '#min_tokens' => 1,
+//      ];
 
       // Show the token help relevant to this pattern type.
       $form['pattern_container']['token_help'] = [
