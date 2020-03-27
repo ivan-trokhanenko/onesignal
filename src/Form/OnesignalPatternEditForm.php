@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Edit form for Onesignal patterns.
  */
-class PatternEditForm extends EntityForm {
+class OnesignalPatternEditForm extends EntityForm {
 
   /**
    * The alias type manager.

@@ -19,10 +19,10 @@ use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
  *   handlers = {
  *     "list_builder" = "Drupal\onesignal\OnesignalPatternListBuilder",
  *     "form" = {
- *       "default" = "Drupal\onesignal\Form\PatternEditForm",
+ *       "default" = "Drupal\onesignal\Form\OnesignalPatternEditForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm",
- *       "enable" = "Drupal\onesignal\Form\PatternEnableForm",
- *       "disable" = "Drupal\onesignal\Form\PatternDisableForm"
+ *       "enable" = "Drupal\onesignal\Form\OnesignalPatternEnableForm",
+ *       "disable" = "Drupal\onesignal\Form\OnesignalPatternDisableForm"
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
@@ -197,7 +197,7 @@ class OnesignalPattern extends ConfigEntityBase implements OnesignalPatternInter
   public static function postDelete(EntityStorageInterface $storage, array $entities) {
     parent::postDelete($storage, $entities);
     // Invalidate the static caches.
-    \Drupal::service('pathauto.generator')->resetCaches();
+//    \Drupal::service('pathauto.generator')->resetCaches();
   }
   
   /**

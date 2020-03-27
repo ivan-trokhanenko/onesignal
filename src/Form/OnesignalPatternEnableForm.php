@@ -9,7 +9,7 @@ use Drupal\Core\Url;
 /**
  * Provides the OneSignal pattern disable disable form.
  */
-class PatternEnableForm extends EntityConfirmFormBase {
+class OnesignalPatternEnableForm extends EntityConfirmFormBase {
 
   /**
    * {@inheritdoc}
