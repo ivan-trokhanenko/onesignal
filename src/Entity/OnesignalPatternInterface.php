@@ -8,23 +8,23 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  * Provides an interface for defining OneSignal pattern entities.
  */
 interface OnesignalPatternInterface extends ConfigEntityInterface {
-  
+
   public function getPattern();
-  
+
   /**
    * Get the tokenized title used during notification generation.
    *
    * @return string
    */
   public function getTitle();
-  
+
   /**
    * Get the tokenized summary used during notification generation.
    *
    * @return string
    */
   public function getSummary();
-  
+
   /**
    * Get the tokenized url used during notification generation.
    *
@@ -54,7 +54,52 @@ interface OnesignalPatternInterface extends ConfigEntityInterface {
    * @return $this
    */
   public function setPattern($pattern);
-
+  
+  /**
+   * Set the tokenized title to use during notification generation.
+   *
+   * @param string $title
+   *
+   * @return $this
+   */
+  public function setTitle($title);
+  
+  /**
+   * Set the tokenized title to use during notification generation.
+   *
+   * @param string $summary
+   *
+   * @return $this
+   */
+  public function setSummary($summary);
+  
+  /**
+   * Set the tokenized picture to use during notification generation.
+   *
+   * @param string $picture
+   *
+   * @return $this
+   */
+  public function setPicture($picture);
+  
+  /**
+   * Set the tokenized icon to use during notification generation.
+   *
+   * @param string $icon
+   *
+   * @return $this
+   */
+  public function setIcon($icon);
+  
+  /**
+   * Set the tokenized url to use during notification generation.
+   *
+   * @param string $url
+   *
+   * @return $this
+   */
+  public function setUrl($url);
+  
   /**
    * Gets the type of this pattern.
    *
@@ -63,7 +108,7 @@ interface OnesignalPatternInterface extends ConfigEntityInterface {
   public function getType();
 
   /**
-   * @return \Drupal\pathauto\AliasTypeInterface
+   * @return \Drupal\onesignal\AliasTypeInterface
    */
   public function getAliasType();
 

@@ -268,10 +268,50 @@ class OnesignalPattern extends ConfigEntityBase implements OnesignalPatternInter
   /**
    * {@inheritdoc}
    */
+  public function setTitle($title) {
+    $this->title = $title;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setSummary($summary) {
+    $this->summary = $summary;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUrl($url) {
+    $this->url = $url;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPicture($picture) {
+    $this->picture = $picture;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setIcon($icon) {
+    $this->icon = $icon;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getType() {
     return $this->type;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -281,14 +321,14 @@ class OnesignalPattern extends ConfigEntityBase implements OnesignalPatternInter
     }
     return $this->aliasTypeCollection->get($this->getType());
   }
-  
+
   /**
    * {@inheritdoc}
    */
   public function getWeight() {
     return $this->weight;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -296,7 +336,7 @@ class OnesignalPattern extends ConfigEntityBase implements OnesignalPatternInter
     $this->weight = $weight;
     return $this;
   }
-  
+
   /**
    * {@inheritdoc}
    */

@@ -275,7 +275,7 @@ class PatternEditForm extends EntityForm {
    * {@inheritdoc}
    */
   public function buildEntity(array $form, FormStateInterface $form_state) {
-    /** @var \Drupal\pathauto\PathautoPatternInterface $entity */
+    /** @var \Drupal\onesignal\Entity\OnesignalPatternInterface $entity */
     $entity = parent::buildEntity($form, $form_state);
 
     // Will only be used for new patterns.
