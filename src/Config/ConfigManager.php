@@ -34,7 +34,7 @@ class ConfigManager implements ConfigManagerInterface {
    *   The config factory service.
    */
   public function __construct(ConfigFactory $configFactory) {
-    $this->config = $configFactory->getEditable('onesignal.config');
+    $this->config = $configFactory->getEditable('onesignal.settings');
 //    $this->config = $configFactory->get('onesignal.settings');
     $this->getSettings();
   }
@@ -138,6 +138,7 @@ class ConfigManager implements ConfigManagerInterface {
       $settings = (array) $this->config->getOriginal();
       $settings += [
         'enabled' => 1,
+        'enabled_entity_types' => [],
         'onesignal_app_id' => NULL,
         'onesignal_safari_web_id' => NULL,
         'onesignal_rest_api_key' => NULL,
