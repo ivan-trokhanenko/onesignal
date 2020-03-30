@@ -11,7 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\onesignal\Config\ConfigManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 /**
  * Configure available entity types for Onesignal.
  */
@@ -46,13 +45,13 @@ class OnesignalSettingsForm extends ConfigFormBase {
     EntityTypeManagerInterface $entity_type_manager,
     EntityFieldManagerInterface $entity_field_manager,
     ConfigManagerInterface $configManager) {
-    
+
     parent::__construct($config_factory);
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
     $this->configManager = $configManager;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -64,27 +63,27 @@ class OnesignalSettingsForm extends ConfigFormBase {
       $container->get('onesignal.config_manager')
     );
   }
-  
+
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
     return 'onesignal_settings_form';
   }
-  
+
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return ['onesignal.settings'];
   }
-  
+
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('onesignal.settings');
-  
+
     $form['onesignal_api'] = [
       '#type' => 'details',
       '#title' => $this->t('API settings'),
@@ -97,7 +96,8 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#maxlength' => 64,
       '#size' => 64,
       '#default_value' => $this->configManager->getAppId(),
-      '#group' => 'onesignal_api',
+      // Uncomment once https://www.drupal.org/project/drupal/issues/2854166 resolved.
+      // '#group' => 'onesignal_api',
     ];
     // Disable the field if its value has been set in the settings.php file.
     // This is useful when there are different configurations for development,
@@ -113,7 +113,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#maxlength' => 64,
       '#size' => 64,
       '#default_value' => $this->configManager->getSafariWebId(),
-      '#group' => 'onesignal_api',
+      // '#group' => 'onesignal_api',
     ];
     // Disable the field if its value has been set in the settings.php file
     // This is useful when there are different configurations for development,
@@ -129,7 +129,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#maxlength' => 64,
       '#size' => 64,
       '#default_value' => $this->configManager->getRestApiKey(),
-      '#group' => 'onesignal_api',
+      // '#group' => 'onesignal_api',
     ];
     $form['onesignal_api']['onesignal_auto_register'] = [
       '#type' => 'select',
@@ -141,7 +141,6 @@ class OnesignalSettingsForm extends ConfigFormBase {
         'false' => $this->t('False'),
       ],
       '#default_value' => $this->configManager->getAutoRegister(),
-      // Uncomment once https://www.drupal.org/project/drupal/issues/2854166 resolved.
       // '#group' => 'onesignal_api',
     ];
     $form['onesignal_api']['onesignal_notify_button'] = [
@@ -207,7 +206,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#default_value' => $this->configManager->getCancelButtonText() ,
       '#group' => 'onesignal_prompt',
     ];
-    
+
     // Welcome settings.
     $form['onesignal_welcome'] = [
       '#type' => 'details',
@@ -234,7 +233,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#default_value' => $this->configManager->getWelcomeMessage(),
       '#group' => 'onesignal_welcome',
     ];
-  
+
     // Visibility settings.
     $visibility = $this->configManager->getSetting('visibility_pages');
     $pages = $this->configManager->getSetting('pages');
@@ -243,7 +242,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Pages'),
       '#group' => 'tracking_scope',
     ];
-  
+
     if ($visibility == 2) {
       $form['tracking']['page_display'] = [];
       $form['tracking']['page_display']['visibility_pages'] = [
@@ -267,7 +266,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       ];
       $description = $this->t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", $description_args);
       $title = $this->t('Pages');
-    
+
       $form['tracking']['page_display']['visibility_pages'] = [
         '#type' => 'radios',
         '#title' => $this->t('Add OneSignal script to specific pages'),
@@ -283,7 +282,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
         '#rows' => 10,
       ];
     }
-  
+
     // Render the role overview.
     $visibility_roles = $this->configManager->getSetting('roles');
     $form['tracking']['role_display'] = [
@@ -291,7 +290,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Roles'),
       '#group' => 'tracking_scope',
     ];
-  
+
     $form['tracking']['role_display']['visibility_roles'] = [
       '#type' => 'radios',
       '#title' => $this->t('Add OneSignal script for specific roles'),
@@ -309,15 +308,14 @@ class OnesignalSettingsForm extends ConfigFormBase {
       '#options' => $role_options,
       '#description' => $this->t('If none of the roles are selected, all users will see the OneSignal subscription popup. If a user has any of the roles checked, that user will see the popup (or excluded, depending on the setting above).'),
     ];
-    
+
+    // Get all applicable entity types.
     $form['enabled_entity_types'] = [
       '#type' => 'details',
       '#title' => $this->t('Enabled entity types'),
       '#description' => $this->t('Enable to add a notification and allow to define OneSignal patterns for the given type. Disabled types already define a path field themselves or currently have a OneSignal pattern.'),
       '#tree' => TRUE,
     ];
-    
-    // Get all applicable entity types.
     foreach ($this->entityTypeManager->getDefinitions() as $entity_type_id => $entity_type) {
       // Disable a checkbox if it already exists and if the entity type has
       // patterns currently defined or if it isn't defined by us.
@@ -352,13 +350,13 @@ class OnesignalSettingsForm extends ConfigFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
-    
+
     $values = $form_state->getValues();
-    
+
     // Trim some text values.
     $form_state->setValue('pages', trim($values['pages']));
     $form_state->setValue('roles', array_filter($values['roles']));
-    
+
     // Verify that every path is prefixed with a slash.
     if ($values['visibility_pages'] != 2) {
       $pages = preg_split('/(\r\n?|\n)/', $values['pages']);
@@ -380,9 +378,9 @@ class OnesignalSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('onesignal.settings');
-    
+
     $form_state->cleanValues();
-    
+
     foreach ($form_state->getValues() as $key => $value) {
       if ($key == 'enabled_entity_types') {
         $enabled_entity_types = [];
@@ -400,7 +398,7 @@ class OnesignalSettingsForm extends ConfigFormBase {
       $config->set($key, $value);
     }
     $config->save();
-    
+
     parent::submitForm($form, $form_state);
   }
 

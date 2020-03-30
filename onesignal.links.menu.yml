@@ -1,6 +1,5 @@
-onesignal.one_signal_config_form:
+onesignal.settings.form:
   title: 'OneSignal'
-  route_name: onesignal.one_signal_config_form
+  route_name: onesignal.settings.form
   description: 'Configurations of OneSignal'
   parent: system.admin_config_services
-  weight: 99
